@@ -14,5 +14,30 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+});
+
+Route::get('/blogs', function () {
+    return view('blogs');
+});
+
+Route::get('/about', function () {
+    return view('about');
+});
+
+Route::get('/home', function () {
+    return view('home');
+});
+
+// Routing with Variable
+Route::get('/home2', function () {
+    return view(
+        'home2',
+        [
+            "nama" => "Aditya Kesuma",
+            "nim" => "21410100039",
+            "jurusan" => "S1 Sistem Informasi",
+            "universitas" => "Universitas Dinamika"
+        ]
+    );
 });
