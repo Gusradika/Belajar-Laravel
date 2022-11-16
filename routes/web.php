@@ -23,7 +23,7 @@ Route::get('/', function () {
 Route::get('/blogs', [postController::class, 'index']);
 
 // Single Post
-Route::get('/blogs/{slug}', [postController::class, 'show']);
+Route::get('/blogs/{post:slug}', [postController::class, 'show']);
 
 Route::get('/about', function () {
     return view('about', ["title" => "About"]);
