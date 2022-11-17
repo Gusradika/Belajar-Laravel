@@ -2,6 +2,7 @@
 
 use App\models\post;
 
+use App\Models\category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\postController;
 
@@ -31,6 +32,14 @@ Route::get('/about', function () {
 
 Route::get('/home', function () {
     return view('home', ["title" => "Home"]);
+});
+
+Route::get('/categories/{category:slug}', function (category $category) {
+    return view('category', ['title' => $category->name, 'posts' => $category->posts, 'category' => $category->slug]);
+});
+
+Route::get('/categories', function () {
+    return view('categories', ['title' => 'Category Post', 'category' => category::all()]);
 });
 
 // Routing with Variable

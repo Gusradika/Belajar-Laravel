@@ -9,6 +9,12 @@ class post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['judul', 'slug', 'excerpt', 'body'];
+    protected $fillable = ['category_id', 'judul', 'slug', 'excerpt', 'body'];
     protected $guarded = ['id'];
+
+    // relation Eloquent
+    public function category()
+    {
+        return $this->belongsTo(category::class);
+    }
 }
