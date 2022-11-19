@@ -1,6 +1,7 @@
 <?php
 
 use App\models\post;
+use App\models\User;
 
 use App\Models\category;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,10 @@ Route::get('/categories/{category:slug}', function (category $category) {
 
 Route::get('/categories', function () {
     return view('categories', ['title' => 'Category Post', 'category' => category::all()]);
+});
+
+Route::get('/author/{user:username}', function (User $user) {
+    return view('blogs', ['title' => 'User Posts', 'posts' => $user->post]);
 });
 
 // Routing with Variable
