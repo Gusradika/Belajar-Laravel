@@ -36,7 +36,7 @@ Route::get('/home', function () {
 });
 
 Route::get('/categories/{category:slug}', function (category $category) {
-    return view('category', ['title' => $category->name, 'posts' => $category->posts, 'category' => $category->slug]);
+    return view('blogs', ['title' => "Post by Category : $category->name", 'posts' => $category->posts]);
 });
 
 Route::get('/categories', function () {
@@ -44,7 +44,7 @@ Route::get('/categories', function () {
 });
 
 Route::get('/author/{user:username}', function (User $user) {
-    return view('blogs', ['title' => 'User Posts', 'posts' => $user->post]);
+    return view('blogs', ['title' => "Post by Author : $user->name", 'posts' => $user->post->load('category', 'User')]);
 });
 
 // Routing with Variable
