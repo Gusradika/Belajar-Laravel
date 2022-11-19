@@ -11,6 +11,7 @@ class post extends Model
 
     protected $fillable = ['category_id', 'judul', 'slug', 'excerpt', 'body'];
     protected $guarded = ['id'];
+    protected $with = ['category', 'User'];
 
     // relation Eloquent
     public function category()

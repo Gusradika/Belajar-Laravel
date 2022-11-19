@@ -19,7 +19,7 @@ use App\Http\Controllers\postController;
 */
 
 Route::get('/', function () {
-    return view('home', ["title" => "Home"]);
+    return view('home', ["title" => "Home", "active" => "Home"]);
 });
 
 Route::get('/blogs', [postController::class, 'index']);
@@ -28,23 +28,23 @@ Route::get('/blogs', [postController::class, 'index']);
 Route::get('/blogs/{post:slug}', [postController::class, 'show']);
 
 Route::get('/about', function () {
-    return view('about', ["title" => "About"]);
+    return view('about', ["title" => "About", "active" => "About"]);
 });
 
 Route::get('/home', function () {
-    return view('home', ["title" => "Home"]);
+    return view('home', ["title" => "Home", "active" => "Home"]);
 });
 
 Route::get('/categories/{category:slug}', function (category $category) {
-    return view('blogs', ['title' => "Post by Category : $category->name", 'posts' => $category->posts]);
+    return view('blogs', ['title' => "Post by Category : $category->name", "active" => 'Categories', 'posts' => $category->posts]);
 });
 
 Route::get('/categories', function () {
-    return view('categories', ['title' => 'Category Post', 'category' => category::all()]);
+    return view('categories', ['title' => 'Category Post', "active" => 'Categories', 'category' => category::all()]);
 });
 
 Route::get('/author/{user:username}', function (User $user) {
-    return view('blogs', ['title' => "Post by Author : $user->name", 'posts' => $user->post->load('category', 'User')]);
+    return view('blogs', ['title' => "Post by Author : $user->name", "active" => 'blogs', 'posts' => $user->post->load('category', 'User')]);
 });
 
 // Routing with Variable
