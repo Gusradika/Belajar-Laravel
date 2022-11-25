@@ -6,6 +6,8 @@ use App\models\User;
 use App\Models\category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\postController;
+use App\Http\Controllers\loginController;
+use App\Http\Controllers\registerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,14 +50,7 @@ Route::get('/author/{user:username}', function (User $user) {
 });
 
 // Routing with Variable
-Route::get('/home2', function () {
-    return view(
-        'home2',
-        [
-            "nama" => "Aditya Kesuma",
-            "nim" => "21410100039",
-            "jurusan" => "S1 Sistem Informasi",
-            "universitas" => "Universitas Dinamika"
-        ]
-    );
-});
+Route::get('/login', [loginController::class, 'index']);
+
+Route::get('/register', [registerController::class, 'index']);
+Route::post('/register', [registerController::class, 'store']);
