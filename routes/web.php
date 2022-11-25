@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\postController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\registerController;
+use App\Http\Controllers\dashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +51,14 @@ Route::get('/author/{user:username}', function (User $user) {
 });
 
 // Routing with Variable
-Route::get('/login', [loginController::class, 'index']);
+Route::get('/login', [loginController::class, 'index'])->middleware('guest')->name('login');
+Route::post('/login', [loginController::class, 'authenticate']);
 
-Route::get('/register', [registerController::class, 'index']);
+Route::post('/logout', [loginController::class, 'logout']);
+
+Route::get('/register', [registerController::class, 'index'])->middleware('guest');
 Route::post('/register', [registerController::class, 'store']);
+
+Route::get('/dashboard', [dashboardController::class, 'index'])->middleware('auth');
+
+// Middleware akan ada ditengah ada auth dan guest

@@ -25,7 +25,7 @@ class registerController extends Controller
         ]);
 
         $validatedData['password'] = bcrypt($validatedData['password']);
-        $validatedData['password'] = Hash::make($validatedData['password']);
+        // $validatedData['password'] = Hash::make($validatedData['password']);
 
         User::create($validatedData);
 
