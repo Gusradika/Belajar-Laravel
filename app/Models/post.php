@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use App\Models\category;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class post extends Model
 {
     use HasFactory;
+    use Sluggable;
 
     protected $fillable = ['category_id', 'judul', 'slug', 'excerpt', 'body'];
     protected $guarded = ['id'];
@@ -65,5 +68,15 @@ class post extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    // ini dari composer require library -> sluggable
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'judul'
+            ]
+        ];
     }
 }

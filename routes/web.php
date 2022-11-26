@@ -68,4 +68,6 @@ Route::get('/dashboard', function () {
 
 
 // Resource
+// Method get -> index, post -> store, put -> update, delete -> destroy
+Route::get('dashboard/posts/checkSlug', [dashboardPostController::class, 'checkSlug'])->middleware('auth');
 Route::resource('dashboard/posts', dashboardPostController::class)->middleware('auth');
