@@ -29,6 +29,7 @@ class registerController extends Controller
 
         User::create($validatedData);
 
+        // Ngirim Flash Message
         $request->session()->flash('success', 'Successfully registered!, Please Login');
 
         return redirect('/login');

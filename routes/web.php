@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\postController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\registerController;
-use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\dashboardPostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +59,13 @@ Route::post('/logout', [loginController::class, 'logout']);
 Route::get('/register', [registerController::class, 'index'])->middleware('guest');
 Route::post('/register', [registerController::class, 'store']);
 
-Route::get('/dashboard', [dashboardController::class, 'index'])->middleware('auth');
+Route::get('/dashboard', function () {
+    return view('dashboard.index');
+})->middleware('auth');
 
 // Middleware akan ada ditengah ada auth dan guest
+
+
+
+// Resource
+Route::resource('dashboard/posts', dashboardPostController::class)->middleware('auth');

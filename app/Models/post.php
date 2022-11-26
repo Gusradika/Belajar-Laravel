@@ -60,4 +60,10 @@ class post extends Model
             });
         });
     }
+
+    // ini dari resource mengambil slug
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
