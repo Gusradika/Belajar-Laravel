@@ -9,6 +9,13 @@
 
         <a href="/dashboard/posts/create" class="btn btn-primary mb-3"><span data-feather="plus"></span> New Post</a>
 
+        {{-- Alert dari Session dari create --}}
+        @if (session()->has('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
