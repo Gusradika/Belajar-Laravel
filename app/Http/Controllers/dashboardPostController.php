@@ -43,12 +43,22 @@ class dashboardPostController extends Controller
      */
     public function store(Request $request)
     {
+
+        // return $request->file('image')->store('post-images');
+        // ddd($request);
+
         $validatedData = $request->validate([
             'judul' => 'required|max:255',
             'slug' => ['required', 'unique:posts'],
             'category_id' => 'required',
+            'image' => 'image|file|max:1500',
             'body' => 'required'
         ]);
+
+        if ($request->file('image')) {
+            $validatedData['image'] = $request->file('image')->store('post-images');
+        }
+
 
         $validatedData = [
             'user_id' => auth()->user()->id,
@@ -57,6 +67,7 @@ class dashboardPostController extends Controller
             'judul' => $request->judul,
             'slug' => $request->slug,
             'category_id' => $request->category_id,
+            'image' => $request->file('image')->store('post-images'),
             'body' => $request->body
         ];
 

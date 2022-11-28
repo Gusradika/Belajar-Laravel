@@ -7,6 +7,7 @@
 
     <div class="col-lg-8">
 
+        {{-- enctype wajib diberi multipart/form-data untuk menangani File upload --}}
         <form method="post" action="/dashboard/posts" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
@@ -34,9 +35,17 @@
                 @enderror
             </div>
 
+            {{-- gunakan fungsi $request->file('<NAMA INPUT>')->store('<NAMA FOLDER>') --}}
+            {{-- Setelah itu Link storage ke folder public dengan cara : php artisan storage:link --}}
             <div class="mb-3">
                 <label for="image" class="form-label">Post Image</label>
-                <input class="form-control" type="file" id="image" name="image">
+                <input class="form-control @error('image') is-invalid @enderror" type="file" id="image"
+                    name="image">
+                @error('image')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
 
             {{-- Category & logic Selected is OLD --}}

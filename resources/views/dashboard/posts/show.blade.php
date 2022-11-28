@@ -19,8 +19,15 @@
                             data-feather="x-circle"></span>Delete</button>
                 </form>
 
-                <img src="https://source.unsplash.com/1400x400/?{{ $post->category->name }}" alt=""
-                    class="img-fluid">
+                @if ($post->image)
+                    <div class="" style="max-height: 400px; max-width: 1400px; overflow: hidden">
+                        <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->image }}" class="img-fluid">
+                    </div>
+                @else
+                    <img src="https://source.unsplash.com/1400x400/?{{ $post->category->name }}" alt="{{ $post->image }}"
+                        class="img-fluid">
+                @endif
+
 
                 <article class="my-3 fs-5">
                     {!! $post->body !!}

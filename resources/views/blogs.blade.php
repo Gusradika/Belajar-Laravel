@@ -27,8 +27,22 @@
     @if ($posts->count())
         {{-- Cards --}}
         <div class="card mb-3">
-            <img src="https://source.unsplash.com/1200x400/?{{ $posts[0]->category->name }}" class="card-img-top"
-                alt="{{ $posts[0]->category->name }}">
+
+            @if ($posts[0]->image)
+                <a href="/blogs/{{ $posts[0]->slug }}">
+                    <div class="justify-content-center d-flex bg-light">
+
+                        <img src="{{ asset('storage/' . $posts[0]->image) }}" alt="{{ $posts[0]->image }}" class="img-fluid"
+                            style="max-height: 400px; max-width: 1400px; overflow: hidden; ">
+
+                    </div>
+                </a>
+            @else
+                <img src="https://source.unsplash.com/1200x400/?{{ $posts[0]->category->name }}" class="card-img-top"
+                    alt="{{ $posts[0]->category->name }}">
+            @endif
+
+
             <div class="card-body text-center">
                 <h3 class="card-title"><a href="/blogs/{{ $posts[0]->slug }}"
                         class="text-decoration-none text-dark">{{ $posts[0]->judul }}</a></h3>
