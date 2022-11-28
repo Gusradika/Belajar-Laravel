@@ -2,18 +2,19 @@
 
 @section('container')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Create New Post</h1>
+        <h1 class="h2">Edit Post</h1>
     </div>
 
     <div class="col-lg-8">
 
-        <form method="post" action="/dashboard/posts" enctype="multipart/form-data">
+        <form method="post" action="/dashboard/posts/{{ $post->slug }}">
+            @method('put')
             @csrf
             <div class="mb-3">
                 <label for="title" class="form-label">Judul</label>
                 {{-- <div class="form-text">Masukan Judul</div> --}}
                 <input type="text" name="judul" class="form-control @error('judul') is-invalid @enderror" id="title"
-                    placeholder="Judul..." required autofocus value="{{ old('judul') }}">
+                    placeholder="Judul..." required autofocus value="{{ old('judul', $post->judul) }}">
                 @error('judul')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -26,17 +27,12 @@
                 {{-- <div class="form-text">Masukan Judul</div> --}}
                 <input type="text" name="slug"
                     class="form-control bg-light shadow-none @error('slug') is-invalid @enderror" id="slug"
-                    placeholder="Generated via API" value="{{ old('slug') }}" readonly required>
+                    placeholder="Generated via API" value="{{ old('slug', $post->slug) }}" readonly required>
                 @error('slug')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror
-            </div>
-
-            <div class="mb-3">
-                <label for="image" class="form-label">Post Image</label>
-                <input class="form-control" type="file" id="image" name="image">
             </div>
 
             {{-- Category & logic Selected is OLD --}}
@@ -46,7 +42,7 @@
                 <select class="form-select @error('category_id') is-invalid @enderror" name="category_id"
                     aria-label="Default select example" required>
                     @foreach ($categories as $category)
-                        @if (old('category_id') == $category->id)
+                        @if (old('category_id', $post->category_id) == $category->id)
                             <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
                         @else
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -63,7 +59,7 @@
                 <label for="y" class="form-label">Body</label>
 
                 {{-- <div class="form-text">Masukan Judul</div> --}}
-                <input id="x" value="{{ old('body') }}" type="hidden" name="body" required>
+                <input id="x" value="{{ old('body', $post->body) }}" type="hidden" name="body" required>
                 <trix-editor input="x" id="y" placeholder="Tuliskan artikelmu disini..."></trix-editor>
                 @error('body')
                     <p class="text-danger">{{ $message }}</p>

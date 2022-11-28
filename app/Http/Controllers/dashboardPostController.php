@@ -87,7 +87,10 @@ class dashboardPostController extends Controller
      */
     public function edit(post $post)
     {
-        //
+        return view('dashboard.posts.edit', [
+            'post' => $post,
+            'categories' => category::all()
+        ]);
     }
 
     /**
@@ -99,7 +102,31 @@ class dashboardPostController extends Controller
      */
     public function update(Request $request, post $post)
     {
-        //
+        $rules = [
+            'judul' => 'required|max:255',
+            'category_id' => 'required',
+            'body' => 'required'
+        ];
+
+        if ($request->slug != $post->slug) {
+            $rules['slug'] = ['required', 'unique:posts'];
+        }
+
+        $validatedData = $request->validate($rules);
+
+        $validatedData = [
+            'user_id' => auth()->user()->id,
+            // Strip_tags digunakan untuk menghapus Tags, STR limit untuk Substring
+            'excerpt' => Str::limit(strip_tags($request->body), 200, '...'),
+            'judul' => $request->judul,
+            'slug' => $request->slug,
+            'category_id' => $request->category_id,
+            'body' => $request->body
+        ];
+
+        post::where('id', $post->id)->update($validatedData);
+        // Atau gunakan Create or Update method
+        return redirect('/dashboard/posts')->with('success', 'New Post has been added!');
     }
 
     /**
@@ -111,6 +138,8 @@ class dashboardPostController extends Controller
     public function destroy(post $post)
     {
         //
+        post::destroy($post->id);
+        return redirect('dashboard/posts')->with('deleted', 'Post has been deleted');
     }
 
     public function checkSlug(Request $request)

@@ -10,8 +10,14 @@
                         href="/categories/{{ $post->category->slug }}">{{ $post->category->name }}</a></p>
 
                 <a href="/dashboard/posts" class="btn btn-success"><span data-feather="arrow-left"></span> Back</a>
-                <a href="/dashboard/posts" class="btn btn-warning"><span data-feather="text-edit"></span> Edit</a>
-                <a href="/dashboard/posts" class="btn btn-danger"><span data-feather="x-circle"></span> Delete</a>
+                <a href="/dashboard/posts/{{ $post->slug }}/edit" class="btn btn-warning"><span
+                        data-feather="text-edit"></span> Edit</a>
+                <form action="/dashboard/posts/{{ $post->slug }}" method="post" class="d-inline">
+                    @method('delete')
+                    @csrf
+                    <button class="btn btn-danger" onclick="return confirm('Are you sure?')"><span
+                            data-feather="x-circle"></span>Delete</button>
+                </form>
 
                 <img src="https://source.unsplash.com/1400x400/?{{ $post->category->name }}" alt=""
                     class="img-fluid">
