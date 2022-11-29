@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\postController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\registerController;
+use App\Http\Controllers\adminCategoryController;
 use App\Http\Controllers\dashboardPostController;
 
 /*
@@ -71,3 +72,5 @@ Route::get('/dashboard', function () {
 // Method get -> index, post -> store, put -> update, delete -> destroy
 Route::get('dashboard/posts/checkSlug', [dashboardPostController::class, 'checkSlug'])->middleware('auth');
 Route::resource('dashboard/posts', dashboardPostController::class)->middleware('auth');
+
+Route::resource('dashboard/categories', adminCategoryController::class)->except('show')->middleware('admin');
