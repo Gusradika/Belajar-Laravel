@@ -7,7 +7,7 @@
                 <h2>{{ $post->judul }}</h2>
                 {{-- <h5>{{ $post['author'] }}</h5> --}}
                 <p>By. <a href="/blogs?User={{ $post->User->username }}">{{ $post->User->name }}</a>
-                    <a href="/categories/{{ $post->category->slug }}">{{ $post->category->name }}</a>
+                    <a href="/blogs?category={{ $post->category->slug }}">{{ $post->category->name }}</a>
                 </p>
 
                 @if ($post->image)

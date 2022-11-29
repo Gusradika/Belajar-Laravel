@@ -6,6 +6,7 @@ use App\Models\post;
 use App\Models\category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class dashboardPostController extends Controller
@@ -116,14 +117,24 @@ class dashboardPostController extends Controller
         $rules = [
             'judul' => 'required|max:255',
             'category_id' => 'required',
+            'image' => 'image|file|max:1500',
             'body' => 'required'
         ];
+
+
 
         if ($request->slug != $post->slug) {
             $rules['slug'] = ['required', 'unique:posts'];
         }
 
         $validatedData = $request->validate($rules);
+
+        if ($request->file('image')) {
+            if ($request->oldImage) {
+                Storage::delete($request->oldImage);
+            }
+            $validatedData['image'] = $request->file('image')->store('post-images');
+        }
 
         $validatedData = [
             'user_id' => auth()->user()->id,
@@ -132,8 +143,11 @@ class dashboardPostController extends Controller
             'judul' => $request->judul,
             'slug' => $request->slug,
             'category_id' => $request->category_id,
-            'body' => $request->body
+            'body' => $request->body,
+            'image' => $request->file('image')->store('post-images')
         ];
+
+
 
         post::where('id', $post->id)->update($validatedData);
         // Atau gunakan Create or Update method
@@ -149,6 +163,9 @@ class dashboardPostController extends Controller
     public function destroy(post $post)
     {
         //
+        if ($post->image) {
+            Storage::delete($post->image);
+        }
         post::destroy($post->id);
         return redirect('dashboard/posts')->with('deleted', 'Post has been deleted');
     }
